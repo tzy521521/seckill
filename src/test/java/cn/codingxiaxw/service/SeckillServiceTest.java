@@ -70,7 +70,7 @@ public class SeckillServiceTest {
         String md5="bf204e2683e7452aa7db1a50b5713bae";
         SeckillExecution execution=seckillService.executeSeckill(seckillId,phone,md5);
         logger.info("execution={}",execution);
-        //执行2次 重复秒杀，成功
+        //执行2次 重复秒杀，成功，最好用try-catch,而不是抛给Test
         //cn.codingxiaxw.exception.RepeatKillException: seckill repeated
         //首次执行时
         /*
@@ -98,9 +98,14 @@ public class SeckillServiceTest {
          */
     }
 
-    @Test//完整逻辑代码测试，注意可重复执行
+    @Test//完整逻辑代码测试，注意可重复执行，测试的是可开启秒杀的的商品，和没有开启秒杀的商品
     public void testSeckillLogic() throws Exception {
-        long seckillId=1000;
+        /**
+         * 没有开启秒杀的商品会输出 md5='null'
+         * exposed=false, md5='null', seckillId=1001, now=1511020550399, start=1511020800000, end=1511020920000
+         * 秒杀开启的商品 测试结果类似 testExecuteSeckill()
+         */
+        long seckillId=1001;
         Exposer exposer=seckillService.exportSeckillUrl(seckillId);
         if (exposer.isExposed())
         {
