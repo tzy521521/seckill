@@ -47,8 +47,6 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
-        //优化点:缓存优化:超时的基础上维护一致性
-        //1。访问redi
 
         //也可以调用本类中的 getById(long seckillId)
         Seckill seckill = seckillDao.queryById(seckillId);
